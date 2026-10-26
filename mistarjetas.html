@@ -180,11 +180,11 @@
         <div class="nav-links">
             <a href="index.html">← Inicio</a> · 
             <a href="eqsl.html">📻 Búsqueda con código</a> · 
-            <a href="estadisticas.html">📊 Estadísticas</a>
+            <a href="estadisticas.html"> Estadísticas</a>
         </div>
 
         <footer>
-            <p>🎧 Digital Voice · 📡 APRS · 🏆 DX Honor Roll</p>
+            <p> Digital Voice · 📡 APRS ·  DX Honor Roll</p>
             <p>© 2026 EA1062RCU · Sagistario306</p>
         </footer>
     </div>
@@ -198,11 +198,9 @@
                 return;
             }
             
-            // Simulación de búsqueda
             alert(`Buscando tarjetas para ${callsign}...\n\n(Esta funcionalidad se activará cuando el bot DV esté conectado)`);
         }
         
-        // Permitir búsqueda con Enter
         document.getElementById('callsign').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') buscarTarjetas();
         });
