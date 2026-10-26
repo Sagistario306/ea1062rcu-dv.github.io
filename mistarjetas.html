@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Tarjetas · EA1062RCU Digital Voice</title>
+    <title>Mis tarjetas · EA1062RCU Digital Voice</title>
     <style>
         :root {
             --color-primario: #6a1b9a;
@@ -21,7 +21,7 @@
             min-height: 100vh;
             line-height: 1.6;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
         header { text-align: center; margin-bottom: 40px; }
         h1 {
             font-size: 2.2em;
@@ -61,69 +61,85 @@
         .card {
             background: var(--color-card);
             border: 1px solid var(--color-borde);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 35px;
             margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-        .card h2 { color: var(--color-secundario); margin-bottom: 20px; }
-        .galeria {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        .card h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: var(--color-texto);
         }
-        .tarjeta {
-            background: var(--color-fondo);
-            border: 1px solid var(--color-borde);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+        .card p {
+            opacity: 0.9;
+            margin-bottom: 25px;
         }
-        .tarjeta:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(106, 27, 154, 0.3);
-        }
-        .tarjeta-img {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+        .search-box {
             display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
-            font-size: 3em;
         }
-        .tarjeta-info { padding: 15px; }
-        .tarjeta-info h3 { color: var(--color-secundario); margin-bottom: 8px; font-size: 1.1em; }
-        .tarjeta-info p { opacity: 0.8; font-size: 0.9em; margin-bottom: 5px; }
-        .tarjeta-info .codigo {
-            font-family: monospace;
+        .search-box input {
+            padding: 12px 18px;
+            font-size: 1em;
+            border: 2px solid var(--color-borde);
+            border-radius: 8px;
             background: var(--color-fondo);
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.85em;
+            color: var(--color-texto);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex: 1;
+            min-width: 200px;
         }
-        .vacio {
-            text-align: center;
-            padding: 60px 20px;
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-primario);
+        }
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: none;
+        }
+        .btn-buscar {
+            padding: 12px 25px;
+            font-size: 1em;
+            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-buscar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 27, 154, 0.4);
+        }
+        .info-text {
             opacity: 0.7;
+            font-size: 0.9em;
+            margin-top: 15px;
         }
-        .vacio-icono { font-size: 4em; margin-bottom: 20px; }
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav-links a {
+            color: var(--color-secundario);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
         footer {
             text-align: center;
             margin-top: 50px;
             padding: 20px;
             opacity: 0.7;
             font-size: 0.9em;
-        }
-        .badge {
-            display: inline-block;
-            background: var(--color-primario);
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin: 5px;
-            font-size: 0.85em;
         }
     </style>
 </head>
@@ -134,7 +150,7 @@
                 <span class="titulo-icono"></span>
                 <span class="titulo-texto">EA1062RCU · Digital Voice</span>
             </h1>
-            <p class="subtitle">Galería de tarjetas QSL emitidas</p>
+            <p class="subtitle">Sistema eQSL para DMR - ADN Systems</p>
         </header>
 
         <nav class="nav-menu">
@@ -143,50 +159,28 @@
             <a href="mistarjetas.html">🎴 Mis tarjetas</a>
             <a href="estadisticas.html">📊 Estadísticas</a>
             <a href="club.html">🏆 DX Honor Roll</a>
-            <a href="log.html"> Log ADIF</a>
+            <a href="log.html">📋 Log ADIF</a>
         </nav>
 
         <div class="card">
-            <h2>🎴 Tarjetas Recientes</h2>
-            <p style="margin-bottom: 20px;">
-                Últimas tarjetas QSL emitidas por nuestro sistema de escucha DMR en ADN Systems.
-                Formato WebP optimizado para móviles.
+            <h2>Mis tarjetas</h2>
+            <p>
+                Ingresa tu indicativo y descarga todas las eQSL que el bot te ha emitido. 
+                Sin códigos: solo un clic por tarjeta.
             </p>
-
-            <div id="galeria" class="galeria">
-                <div class="vacio">
-                    <div class="vacio-icono"></div>
-                    <h3>Aún no hay tarjetas publicadas</h3>
-                    <p>El bot DV está en fase de conexión. Las tarjetas aparecerán aquí cuando el sistema esté activo.</p>
-                    <p style="margin-top: 15px;">
-                        <span class="badge">📊 100 eQSL/día</span>
-                        <span class="badge">🎨 WebP</span>
-                        <span class="badge">📅 2 meses vitrina</span>
-                    </p>
-                </div>
+            <div class="search-box">
+                <input type="text" id="callsign" placeholder="TU_CALL (ej: LU9DUV)" maxlength="10">
+                <button class="btn-buscar" onclick="buscarTarjetas()">BUSCAR MIS TARJETAS</button>
             </div>
+            <p class="info-text">
+                Gracias por tu señal · Confirma recepción en el perfil QRZ de EA1062RCU · 73
+            </p>
         </div>
 
-        <div class="card">
-            <h2>ℹ️ Información</h2>
-            <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
-                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
-                    Las tarjetas se muestran en orden cronológico inverso (más recientes primero)
-                </li>
-                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
-                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
-                    Cada tarjeta tiene un <strong>código único</strong> de confirmación
-                </li>
-                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
-                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
-                    Disponibles durante <strong>2 meses</strong> desde la emisión
-                </li>
-                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
-                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
-                    Formato <strong>WebP</strong> para máxima calidad con mínimo peso
-                </li>
-            </ul>
+        <div class="nav-links">
+            <a href="index.html">← Inicio</a> · 
+            <a href="eqsl.html">📻 Búsqueda con código</a> · 
+            <a href="estadisticas.html">📊 Estadísticas</a>
         </div>
 
         <footer>
@@ -194,5 +188,24 @@
             <p>© 2026 EA1062RCU · Sagistario306</p>
         </footer>
     </div>
+
+    <script>
+        function buscarTarjetas() {
+            const callsign = document.getElementById('callsign').value.trim().toUpperCase();
+            
+            if (!callsign) {
+                alert('⚠️ Por favor ingresa tu indicativo');
+                return;
+            }
+            
+            // Simulación de búsqueda
+            alert(`Buscando tarjetas para ${callsign}...\n\n(Esta funcionalidad se activará cuando el bot DV esté conectado)`);
+        }
+        
+        // Permitir búsqueda con Enter
+        document.getElementById('callsign').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') buscarTarjetas();
+        });
+    </script>
 </body>
 </html>
