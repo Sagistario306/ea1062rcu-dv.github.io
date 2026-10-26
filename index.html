@@ -37,10 +37,21 @@
         h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .titulo-texto {
             background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        .titulo-icono {
+            font-size: 1em;
+            -webkit-text-fill-color: initial;
+            background: none;
         }
         .subtitle {
             font-size: 1.1em;
@@ -120,15 +131,18 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎤 EA1062RCU · Digital Voice</h1>
+            <h1>
+                <span class="titulo-icono"></span>
+                <span class="titulo-texto">EA1062RCU · Digital Voice</span>
+            </h1>
             <p class="subtitle">Sistema eQSL para DMR - ADN Systems</p>
         </header>
 
         <nav class="nav-menu">
-            <a href="eqsl.html">📥 Descarga tu eQSL</a>
-            <a href="mistarjetas.html">🎴 Mis tarjetas</a>
+            <a href="eqsl.html"> Descarga tu eQSL</a>
+            <a href="mistarjetas.html"> Mis tarjetas</a>
             <a href="estadisticas.html">📊 Estadísticas</a>
-            <a href="club.html">🏆 DX Honor Roll</a>
+            <a href="club.html"> DX Honor Roll</a>
             <a href="log.html">📋 Log ADIF</a>
         </nav>
 
@@ -145,7 +159,7 @@
             <div style="margin-top: 20px;">
                 <span class="badge">📊 100 eQSL/día</span>
                 <span class="badge">🎨 WebP</span>
-                <span class="badge">📅 2 meses vitrina</span>
+                <span class="badge"> 2 meses vitrina</span>
             </div>
         </div>
 
@@ -179,13 +193,12 @@
         </div>
 
         <footer>
-            <p>🎤 Digital Voice · 📡 APRS · 🏆 DX Honor Roll</p>
+            <p>🎧 Digital Voice · 📡 APRS · 🏆 DX Honor Roll</p>
             <p>© 2026 EA1062RCU · Sagistario306</p>
         </footer>
     </div>
 
     <script>
-        // Reloj UTC en tiempo real
         function updateClock() {
             const now = new Date();
             const hours = String(now.getUTCHours()).padStart(2, '0');
