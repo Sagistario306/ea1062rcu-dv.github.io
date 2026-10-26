@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log ADIF · EA1062RCU Digital Voice</title>
+    <style>
+        :root {
+            --color-primario: #6a1b9a;
+            --color-secundario: #e91e63;
+            --color-fondo: #0a0e27;
+            --color-texto: #ffffff;
+            --color-card: #1a1f3a;
+            --color-borde: #2a2f4a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-fondo);
+            color: var(--color-texto);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .titulo-texto {
+            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .titulo-icono { font-size: 1em; -webkit-text-fill-color: initial; background: none; }
+        .subtitle { font-size: 1em; opacity: 0.8; }
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--color-card);
+            border-radius: 10px;
+            border: 1px solid var(--color-borde);
+        }
+        .nav-menu a {
+            color: var(--color-texto);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-menu a:hover { background: var(--color-primario); }
+        .card {
+            background: var(--color-card);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .card h2 { color: var(--color-secundario); margin-bottom: 20px; }
+        .log-container {
+            background: #000;
+            border: 1px solid var(--color-borde);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 500px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .log-entry {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(42, 47, 74, 0.5);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .log-entry:last-child { border-bottom: none; }
+        .log-call { color: var(--color-secundario); font-weight: bold; }
+        .log-date { opacity: 0.7; }
+        .log-mode {
+            background: var(--color-primario);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .vacio-log {
+            text-align: center;
+            padding: 60px 20px;
+            opacity: 0.7;
+        }
+        .vacio-icono { font-size: 4em; margin-bottom: 20px; }
+        .info-box {
+            background: rgba(106, 27, 154, 0.15);
+            border: 1px solid var(--color-primario);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .info-box h3 { color: var(--color-secundario); margin-bottom: 10px; }
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-mini {
+            background: var(--color-fondo);
+            border: 1px solid var(--color-borde);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-mini-num {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--color-secundario);
+        }
+        .stat-mini-label { opacity: 0.8; font-size: 0.85em; margin-top: 5px; }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="titulo-icono"></span>
+                <span class="titulo-texto">EA1062RCU · Digital Voice</span>
+            </h1>
+            <p class="subtitle">Log de contactos en formato ADIF</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="index.html">🏠 Inicio</a>
+            <a href="eqsl.html">📥 Descarga tu eQSL</a>
+            <a href="mistarjetas.html">🎴 Mis tarjetas</a>
+            <a href="estadisticas.html">📊 Estadísticas</a>
+            <a href="club.html">🏆 DX Honor Roll</a>
+            <a href="log.html">📋 Log ADIF</a>
+        </nav>
+
+        <div class="card">
+            <h2>📋 Log ADIF</h2>
+            <p style="margin-bottom: 20px;">
+                Registro completo de todos los QSOs detectados por nuestro sistema 
+                de escucha DMR en ADN Systems. Formato estándar ADIF para importación 
+                en cualquier software de log (Logger32, N1MM, QRZ, etc.).
+            </p>
+
+            <div class="stats-mini">
+                <div class="stat-mini">
+                    <div class="stat-mini-num">0</div>
+                    <div class="stat-mini-label">QSOs totales</div>
+                </div>
+                <div class="stat-mini">
+                    <div class="stat-mini-num">0</div>
+                    <div class="stat-mini-label">Este mes</div>
+                </div>
+                <div class="stat-mini">
+                    <div class="stat-mini-num">0</div>
+                    <div class="stat-mini-label">Países</div>
+                </div>
+                <div class="stat-mini">
+                    <div class="stat-mini-num">DMR</div>
+                    <div class="stat-mini-label">Modo</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📝 Últimos Contactos</h2>
+            <div class="log-container" id="log-entries">
+                <div class="vacio-log">
+                    <div class="vacio-icono"></div>
+                    <h3>Log vacío</h3>
+                    <p>El bot DV está en fase de conexión. Los contactos aparecerán aquí cuando el sistema esté activo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>ℹ️ Sobre el formato ADIF</h2>
+            <div class="info-box">
+                <h3>¿Qué es ADIF?</h3>
+                <p>
+                    <strong>ADIF</strong> (Amateur Data Interchange Format) es el estándar internacional 
+                    para intercambiar registros de contactos de radioafición. Nuestro log se genera 
+                    automáticamente en este formato para máxima compatibilidad.
+                </p>
+            </div>
+            <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
+                    Compatible con <strong>QRZ.com</strong>, <strong>LoTW</strong>, <strong>eQSL.cc</strong>
+                </li>
+                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
+                    Importable en <strong>Logger32</strong>, <strong>N1MM</strong>, <strong>HRD</strong>, etc.
+                </li>
+                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
+                    Campos incluidos: CALL, QSO_DATE, TIME_ON, FREQ, MODE, RST_SENT, RST_RCVD
+                </li>
+                <li style="margin-bottom: 12px; padding-left: 25px; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--color-secundario);">✓</span>
+                    Modo reportado: <strong>DMR</strong> (Digital Mobile Radio)
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>📥 Descargar Log</h2>
+            <p style="margin-bottom: 15px;">
+                Puedes descargar el log completo en formato ADIF para importarlo en tu software de log preferido.
+            </p>
+            <p style="opacity: 0.7; font-size: 0.9em;">
+                ⏳ El archivo estará disponible cuando el bot DV esté activo y haya generado contactos.
+            </p>
+        </div>
+
+        <footer>
+            <p>🎧 Digital Voice ·  APRS · 🏆 DX Honor Roll</p>
+            <p>© 2026 EA1062RCU · Sagistario306</p>
+        </footer>
+    </div>
+</body>
+</html>
