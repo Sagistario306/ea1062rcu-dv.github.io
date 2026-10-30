@@ -319,6 +319,37 @@
         document.getElementById('callsign-detect').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') consultarDeteccion();
         });
-    </script>
+<script>
+(function() {
+  var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwWSjoHeZUuOXtXh9Y-mvGjLR21v9T1XbBNztp60dkuci84e9l5-tb09h2uuhw9thE12w/exec';
+  
+  function registrarDescarga(call, codigo) {
+    if (!call || !codigo) return;
+    var key = 'dv_descargado_' + call + '_' + codigo;
+    if (localStorage.getItem(key)) return; // Evita doble registro
+    
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors', // Importante para evitar errores CORS en el navegador
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ call: call, code: codigo })
+    }).then(function() {
+      localStorage.setItem(key, '1');
+      console.log('✅ Sensor DV: Descarga registrada para', call);
+    }).catch(function(err) {
+      console.error('❌ Error sensor DV:', err);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var call = urlParams.get('call');
+    var code = urlParams.get('code');
+    if (call && code) {
+      setTimeout(function() { registrarDescarga(call, code); }, 3000); // Espera 3s
+    }
+  });
+})();
+</script>
 </body>
 </html>
