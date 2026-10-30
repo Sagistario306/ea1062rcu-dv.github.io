@@ -210,7 +210,7 @@
     <div class="container">
         <header>
             <h1>
-                <span class="titulo-icono"></span>
+                <span class="titulo-icono">📡</span>
                 <span class="titulo-texto">EA1062RCU · Digital Voice</span>
             </h1>
             <p class="subtitle">Sistema eQSL para DMR - ADN Systems</p>
@@ -235,7 +235,7 @@
             </div>
             <p class="info-text">
                 ¿Sin código? Usa «¿Fui detectado?» más abajo y revisa los comentarios de tu tarjeta en eQSL.cc.<br>
-                 ¿Sin cuenta eQSL? Pide tu código al bot: <a href="#">@ea1062rcu_dv_bot</a>
+                ¿Sin cuenta eQSL? Pide tu código al bot: <a href="https://t.me/ea1062rcu_eqsl_bot" target="_blank">@ea1062rcu_eqsl_bot</a>
             </p>
         </div>
 
@@ -259,7 +259,7 @@
                 <ol>
                     <li>Entra en <strong>QRZ.com</strong> e inicia sesión.</li>
                     <li>Ve a <strong>Logbook → Add QSO</strong>.</li>
-                    <li>Escribe: callsign <strong>EA1062RCU</strong>, fecha del reporte, banda <strong>2M</strong>, modo <strong>DMR</strong>.</li>
+                    <li>Escribe: callsign <strong>EA1062RCU</strong>, fecha del reporte, banda <strong>70CM</strong>, modo <strong>DMR</strong>.</li>
                     <li>Guarda. ¡Listo! Tu próxima tarjeta queda garantizada. 73</li>
                 </ol>
                 <p style="margin-top: 20px; opacity: 0.9;">
@@ -273,11 +273,14 @@
         </div>
 
         <footer>
-            <p> Digital Voice · 📡 APRS ·  DX Honor Roll</p>
+            <p>📡 Digital Voice · 🌐 DX Honor Roll</p>
             <p>© 2026 EA1062RCU · Sagistario306</p>
         </footer>
     </div>
 
+    <!-- ========================================== -->
+    <!-- SCRIPTS DE FUNCIONALIDAD -->
+    <!-- ========================================== -->
     <script>
         function buscarQSL() {
             const callsign = document.getElementById('callsign').value.trim().toUpperCase();
@@ -287,14 +290,14 @@
                 alert('⚠️ Por favor ingresa tu indicativo');
                 return;
             }
-            
             if (!codigo) {
                 alert('⚠️ Por favor ingresa el código de tu tarjeta');
                 return;
             }
             
-            // Simulación de búsqueda
-            alert(`Buscando eQSL para ${callsign} con código ${codigo}...\n\n(Esta funcionalidad se activará cuando el bot DV esté conectado)`);
+            // Redirección a la página de la tarjeta (cuando esté implementada)
+            // window.location.href = `tarjeta.html?call=${callsign}&code=${codigo}`;
+            alert(`Buscando eQSL para ${callsign} con código ${codigo}...\n\n(Conectando con el sistema DV)`);
         }
         
         function consultarDeteccion() {
@@ -305,8 +308,7 @@
                 return;
             }
             
-            // Simulación de consulta
-            alert(`Consultando si ${callsign} fue detectado este mes...\n\n(Esta funcionalidad se activará cuando el bot DV esté conectado)`);
+            alert(`Consultando si ${callsign} fue detectado este mes...\n\n(Conectando con el sistema DV)`);
         }
         
         // Permitir búsqueda con Enter
@@ -319,37 +321,56 @@
         document.getElementById('callsign-detect').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') consultarDeteccion();
         });
-<script>
-(function() {
-  var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwWSjoHeZUuOXtXh9Y-mvGjLR21v9T1XbBNztp60dkuci84e9l5-tb09h2uuhw9thE12w/exec';
-  
-  function registrarDescarga(call, codigo) {
-    if (!call || !codigo) return;
-    var key = 'dv_descargado_' + call + '_' + codigo;
-    if (localStorage.getItem(key)) return; // Evita doble registro
-    
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors', // Importante para evitar errores CORS en el navegador
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ call: call, code: codigo })
-    }).then(function() {
-      localStorage.setItem(key, '1');
-      console.log('✅ Sensor DV: Descarga registrada para', call);
-    }).catch(function(err) {
-      console.error('❌ Error sensor DV:', err);
-    });
-  }
+    </script>
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var call = urlParams.get('call');
-    var code = urlParams.get('code');
-    if (call && code) {
-      setTimeout(function() { registrarDescarga(call, code); }, 3000); // Espera 3s
-    }
-  });
-})();
-</script>
+    <!-- ========================================== -->
+    <!-- SENSOR DV-WATCHDOG (Write-Back) -->
+    <!-- ========================================== -->
+    <script>
+    (function() {
+      // 🔧 URL de tu Google Apps Script (ya configurada)
+      var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwWSjoHeZUuOXtXh9Y-mvGjLR21v9T1XbBNztp60dkuci84e9l5-tb09h2uuhw9thE12w/exec';
+      
+      function registrarDescarga(call, codigo) {
+        if (!call || !codigo) return;
+        
+        // Evitar doble registro en el mismo navegador
+        var key = 'dv_descargado_' + call + '_' + codigo;
+        if (localStorage.getItem(key)) {
+            console.log('ℹ️ Sensor DV: Ya registrado previamente para', call);
+            return;
+        }
+        
+        console.log('📡 Sensor DV: Enviando registro para', call, codigo);
+        
+        fetch(WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Crucial para evitar errores CORS en el navegador
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ call: call, code: codigo })
+        }).then(function() {
+          localStorage.setItem(key, '1');
+          console.log('✅ Sensor DV: Descarga registrada exitosamente para', call);
+        }).catch(function(err) {
+          console.error('❌ Sensor DV: Error registrando descarga:', err);
+        });
+      }
+
+      // Detectar cuando la página carga con parámetros en la URL
+      document.addEventListener('DOMContentLoaded', function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var call = urlParams.get('call');
+        var code = urlParams.get('code');
+        
+        if (call && code) {
+          console.log('🔍 Parámetros detectados: call=', call, 'code=', code);
+          // Registrar después de 3 segundos (cuando el usuario ya vio la tarjeta)
+          setTimeout(function() {
+            registrarDescarga(call, code);
+          }, 3000);
+        }
+      });
+    })();
+    </script>
 </body>
 </html>
